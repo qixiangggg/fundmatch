@@ -1,0 +1,30 @@
+{
+  "name": "fundmatch",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "npx tsc",
+    "start": "npx tsc && node dist/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/qixiangggg/fundmatch.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/qixiangggg/fundmatch/issues"
+  },
+  "homepage": "https://github.com/qixiangggg/fundmatch#readme",
+  "dependencies": {
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "@tsconfig/node20": "^20.1.9",
+    "@types/express": "^5.0.6",
+    "typescript": "^5.9.3"
+  }
+}
