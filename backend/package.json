@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "npx tsc",
-    "start": "npx tsc && node dist/index.js"
+    "start": "npx tsc && node dist/app.js"
   },
   "repository": {
     "type": "git",
@@ -14,17 +14,24 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
+  "type": "module",
   "bugs": {
     "url": "https://github.com/qixiangggg/fundmatch/issues"
   },
   "homepage": "https://github.com/qixiangggg/fundmatch#readme",
   "dependencies": {
-    "express": "^5.2.1"
+    "@prisma/adapter-pg": "^7.4.0",
+    "@prisma/client": "^7.4.0",
+    "dotenv": "^17.2.4",
+    "express": "^5.2.1",
+    "pg": "^8.18.0"
   },
   "devDependencies": {
     "@tsconfig/node20": "^20.1.9",
     "@types/express": "^5.0.6",
+    "@types/node": "^25.2.3",
+    "@types/pg": "^8.16.0",
+    "prisma": "^7.4.0",
     "typescript": "^5.9.3"
   }
 }

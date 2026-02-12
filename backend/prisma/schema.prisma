@@ -1,0 +1,40 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Document{
+  id Int @id @default(autoincrement())
+  fileName String
+  uploadedByUserId Int
+  uploadedAt DateTime @default(now())
+  status DocumentStatus @default(UPLOADED)
+  storageKey String @unique
+  user   User   @relation(fields: [uploadedByUserId], references: [id])
+  deletedAt DateTime?
+}
+
+model User{
+  id Int @id @default(autoincrement())
+  email String @unique
+  password String
+  createdAt DateTime @default(now())
+  documents Document[]
+}
+
+enum DocumentStatus{
+  UPLOADED
+  PROCESSING
+  DONE
+  FAILED
+}
