@@ -1,31 +1,17 @@
 import express from "express"
 import type { Express, Request, Response } from "express"
-import { prisma } from "./lib/prisma.js"
-const PORT = 8000
+import cors from "cors"
+import { userRouter } from "./modules/user/user.routes.js"
+
 const app: Express = express()
 
+app.use(cors())
 app.use(express.json())
 
-app.get('/', (req: Request,res: Response):void => {
-    res.json({})
+app.use("/users", userRouter)
+
+app.get('/health', (req: Request,res: Response):void => {
+    res.json({"status": "ok"});
 })
 
-app.post("/documents", async (req: Request, res: Response) => {
-    const {fileName, userId} = req.body
-    try{
-        const newDocument = await prisma.document.create({
-            data:{
-                fileName,
-                userId
-            }
-        });
-        res.status(201).json(newDocument);
-    } catch(error){
-        console.error("Prisma Error:", error)
-        res.status(500).json({message:"Something went wrong"})
-    }
-    
-})
-app.listen(PORT, ():void => {
-    console.log("Listening on port: ", PORT)
-})
+export default app;
