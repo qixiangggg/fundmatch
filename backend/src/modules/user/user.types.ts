@@ -4,6 +4,7 @@ export type CreateUserInput = {
 }
 
 export type UpdateUserInput = {
+    id:number
     email: string
     password: string
 }

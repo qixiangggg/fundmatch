@@ -1,5 +1,5 @@
 import type { Request, Response } from "express";
-import type { CreateUserInput, User } from "./user.types.js";
+import type { CreateUserInput, UpdateUserInput, User } from "./user.types.js";
 import * as service from "./user.service.js"
 
 export async function createUser(
@@ -31,3 +31,29 @@ export async function getUserById(
     }
 }
 
+export async function updateUserById(
+    req: Request<{id:string}, {}, Omit<UpdateUserInput, "id">>,
+    res: Response<User|{message:string}>
+){
+    const {id} = req.params
+    const user: User | null = await service.updateUserById({id:Number(id),...req.body})
+    if(user){
+        res.json(user)
+    }else{
+        res.status(404).json({message: "No user with that id"})
+    }
+
+}
+
+export async function deleteUserById(
+    req: Request<{id: string}>,
+    res: Response<User | {message: string}>
+){
+    const {id} = req.params
+    const user: User | null = await service.deleteUserById(Number(id))
+    if(user){
+        res.json(user)
+    }else{
+        res.status(404).json({message: "No user with that id"})
+    }
+}
