@@ -1,9 +1,9 @@
 import type { Request, Response } from "express";
-import type { CreateUserInput, UpdateUserInput, User } from "./user.types.js";
+import type {  User } from "./user.types.js";
 import * as service from "./user.service.js"
 
 export async function createUser(
-    req: Request<{}, {}, CreateUserInput>,
+    req: Request<{}, {}, Omit<User,"id">>,
     res: Response<User>
 ): Promise<void> {
     const user: User = await service.createUser(req.body)
@@ -32,7 +32,7 @@ export async function getUserById(
 }
 
 export async function updateUserById(
-    req: Request<{id:string}, {}, Omit<UpdateUserInput, "id">>,
+    req: Request<{id:string}, {}, Partial<User>>,
     res: Response<User|{message:string}>
 ){
     const {id} = req.params
