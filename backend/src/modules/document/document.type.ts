@@ -1,9 +1,3 @@
-export type CreateDocumentInput = {
-    fileName: string
-    uploadedByUserId: number
-    storageKey: string
-}
-
 export type Document = {
     id :number
     fileName: string
@@ -12,4 +6,15 @@ export type Document = {
     status: "UPLOADED" | "PROCESSING" | "DONE" | "FAILED"
     storageKey: string
     deletedAt : Date | null
+}
+
+export type CreateDocumentRequest = {
+    fileName: string,
+    uploadedByUserId: number
+    storageKey: string
+}
+
+export type UpdateDocumentRequest = {
+    fileName?: string,
+    storageKey?: string
 }

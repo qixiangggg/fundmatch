@@ -1,12 +1,15 @@
 import type { Request, Response } from "express";
-import type {  User } from "./user.types.js";
+import type {  User, CreateUserRequest, UpdateUserRequest } from "./user.types.js";
 import * as service from "./user.service.js"
 
 export async function createUser(
-    req: Request<{}, {}, Omit<User,"id">>,
+    req: Request<{}, {}, CreateUserRequest>,
     res: Response<User>
 ): Promise<void> {
-    const user: User = await service.createUser(req.body)
+    const user: User = await service.createUser({
+        email: req.body.email,
+        password: req.body.password
+    })
     res.status(201).json(user);
 }
 
@@ -32,11 +35,11 @@ export async function getUserById(
 }
 
 export async function updateUserById(
-    req: Request<{id:string}, {}, Partial<User>>,
+    req: Request<{id:string}, {}, UpdateUserRequest>,
     res: Response<User|{message:string}>
 ){
     const {id} = req.params
-    const user: User | null = await service.updateUserById({id:Number(id),...req.body})
+    const user: User | null = await service.updateUserById(Number(id), req.body)
     if(user){
         res.json(user)
     }else{
@@ -48,7 +51,7 @@ export async function updateUserById(
 export async function deleteUserById(
     req: Request<{id: string}>,
     res: Response<User | {message: string}>
-){
+): Promise<void>{
     const {id} = req.params
     const user: User | null = await service.deleteUserById(Number(id))
     if(user){

@@ -1,7 +1,8 @@
+import type { Prisma } from "../../generated/prisma/client.js";
 import { prisma } from "../../lib/prisma.js";
 import type {  User } from "./user.types.js";
 
-export async function createUser(data: Omit<User,"id">): Promise<User>{
+export async function createUser(data: Prisma.UserCreateInput): Promise<User>{
     return prisma.user.create({data});
 }
 
@@ -17,10 +18,10 @@ export async function getUserById(id: number): Promise<User | null>{
     })
 }
 
-export async function updateUserById(data: Partial<User>): Promise<User | null>{
+export async function updateUserById(id: number, data: Prisma.UserUpdateInput): Promise<User | null>{
     return prisma.user.update({
         where:{
-            id:data.id,
+            id:id,
         },data:{
             email: data.email,
             password: data.password
